@@ -1,6 +1,7 @@
 import { BaseModel, beforeSave, column } from "@adonisjs/lucid/orm";
 import hash from '@adonisjs/core/services/hash'
 import { DateTime } from "luxon";
+import { DbAccessTokensProvider } from "@adonisjs/auth/access_tokens";
 
 export default class User extends BaseModel {
   static table = "users";
@@ -36,4 +37,12 @@ export default class User extends BaseModel {
   static async verifyPassword(plainPassword: string, hashedPassword: string) {
     return hash.verify(hashedPassword, plainPassword)
   }
+
+  static accessTokens = DbAccessTokensProvider.forModel(User, {
+    expiresIn: 60,
+    prefix: 'oat_',
+    table: 'auth_access_tokens',
+    type: 'auth_token',
+    tokenSecretLength: 40,
+  })
 }
