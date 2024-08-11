@@ -1,4 +1,4 @@
-import { afterFetch, afterFind, BaseModel, beforeFetch, beforeFind, beforeSave, column } from "@adonisjs/lucid/orm";
+import { BaseModel, beforeSave, column } from "@adonisjs/lucid/orm";
 import hash from '@adonisjs/core/services/hash'
 import { DateTime } from "luxon";
 
