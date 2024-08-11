@@ -23,3 +23,10 @@ createUserValidator.messagesProvider = new SimpleMessagesProvider({
   'password.regex': 'The password must contain at least one letter and one number',
   'password.minLength': 'The password must be at least 6 characters long'
 })
+
+export const loginValidator = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+    password: vine.string().use(passwordRule())
+  })
+)
