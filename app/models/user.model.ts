@@ -1,4 +1,4 @@
-import { BaseModel, beforeSave, column } from "@adonisjs/lucid/orm";
+import { afterFetch, afterFind, BaseModel, beforeFetch, beforeFind, beforeSave, column } from "@adonisjs/lucid/orm";
 import hash from '@adonisjs/core/services/hash'
 import { DateTime } from "luxon";
 
@@ -31,5 +31,9 @@ export default class User extends BaseModel {
     if (user.$dirty.password) {
       user.password = await hash.make(user.password)
     }
+  }
+
+  static async verifyPassword(plainPassword: string, hashedPassword: string) {
+    return hash.verify(hashedPassword, plainPassword)
   }
 }
