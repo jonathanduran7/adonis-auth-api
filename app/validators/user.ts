@@ -1,11 +1,18 @@
 import vine, { SimpleMessagesProvider } from '@vinejs/vine'
 import { passwordRule } from './rules/password.js'
+import { uniqueRule } from './rules/uniqueRegister.js'
 
 export const createUserValidator = vine.compile(
   vine.object({
-    username: vine.string().minLength(4).maxLength(30),
-    email: vine.string().email(),
-    password: vine.string().use(passwordRule())
+    username: vine
+      .string()
+      .minLength(4)
+      .maxLength(30),
+    email: vine.string()
+      .email()
+      .use(uniqueRule({ table: 'users', column: 'email' })),
+    password: vine.string()
+      .use(passwordRule())
   })
 )
 
