@@ -25,6 +25,7 @@ export default class UsersController {
       return
     }
 
-    response.ok({ message: 'Logged in successfully' })
+    const token = await User.accessTokens.create(user)
+    response.ok(token)
   }
 }
